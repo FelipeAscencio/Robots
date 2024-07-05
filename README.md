@@ -5,6 +5,7 @@
 ## Introduction
 
 The game is a reinterpretation of the classic video game "Chase".
+
 It is a single-player game in which we control "Felipe", a nice human who tries to escape from the feared "Robots" that are chasing him.
 
 Your mission is to try to escape from them by making them collide with each other, but you must be cautious, since in each turn your enemies will do everything possible to capture you.
