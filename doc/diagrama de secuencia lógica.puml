@@ -1,0 +1,104 @@
+@startuml
+
+title Diagrama de Secuencia: Lógica del juego
+
+actor Usuario
+participant "VistaMapa" as Vista
+participant "Juego" as Juego
+participant "Tablero" as Tablero
+participant "Direccion" as Direccion
+participant "Jugador" as Jugador
+participant "Enemigo" as Enemigo
+participant "Personaje" as Personaje
+
+activate Usuario
+Usuario -> Vista: Cambia del menu al mapa
+activate Vista
+
+ref over Vista: Inicialización del Juego y GUI
+activate Juego
+
+loop Turnos
+    Usuario -> Vista: Usuario realiza una acción
+        alt Usuario pulsa "reiniciar"
+                Vista -> Vista: Reinicia el juego desde 0
+            else Usuario cambia tamaño del tablero
+                Vista -> Vista: Reinicia el juego con nuevas dimensiones
+            else
+                Vista -> Juego: Informa acción realizada al modelo
+        end
+
+        Juego -> Direccion: Obtener nueva dirección
+        activate Direccion
+        Direccion --> Juego: Nueva dirección obtenida
+        deactivate Direccion
+
+        Juego -> Jugador: Indica cambio de posición al Jugador
+        activate Jugador
+        Jugador -> Jugador: Jugador cambia de posición
+        Jugador --> Juego: Nueva posición del Jugador
+        deactivate Jugador
+
+        Juego -> Tablero: Actualizar posición del Jugador
+        activate Tablero
+        Tablero --> Juego: Posición del Jugador actualizada
+        deactivate Tablero
+
+        Juego -> Juego: Verificar colisión del Jugador
+        alt Jugador colisiona con Enemigo
+            Juego -> Juego: Estado pasa a ser "Game Over"
+        end
+
+        loop Lista de Enemigos
+            Juego -> Enemigo: Solicitar desplazamiento a enemigos
+            activate Enemigo
+            alt Enemigo = Explosion
+                Enemigo -> Juego: Enemigo no se desplaza
+                else
+                Enemigo -> Personaje: Calcular nueva dirección
+                activate Personaje
+                Personaje -> Personaje: Calcula nueva dirección
+                Personaje -> Enemigo: Nueva posición calculada
+                deactivate Personaje
+                Enemigo -> Enemigo: Realizar desplazamiento
+                Enemigo --> Juego: Desplazamiento realizado
+                deactivate Enemigo
+                Juego -> Juego: Verificar choque de enemigos entre si
+                alt Hay colisión de enemigos
+                    Juego -> Enemigo: Eliminar enemigo/s
+                    activate Enemigo
+                    Enemigo --> Juego: Enemigo/s eliminado/s
+                    deactivate Enemigo
+                    Juego -> Tablero: Añadir Explosión
+                    activate Tablero
+                    Tablero --> Juego: Explosión añadida
+                    deactivate Tablero
+                    Juego -> Juego: Aumentar puntaje
+                    alt No quedan mas enemigos
+                        Juego -> Juego: Estado pasa a ser "Siguiente Nivel"
+                        end
+                end
+            end
+        end
+
+        Juego -> Juego: Verificar colisión del Jugador
+        alt Jugador colisiona con Enemigo
+            Juego -> Juego: Estado pasa a ser "Game Over"
+        end
+
+        Juego -> Vista: Actualizar vista del Juego
+
+        Vista -> Vista: Actualiza estado del tablero y del juego
+        alt Estado = Game Over
+                Vista -> Usuario: Muestra mensaje de Game Over y finaliza el juego
+            else Estado = Siguiente Nivel
+                Vista -> Vista: Reinicia el juego con siguiente nivel
+            else Estado = Continua el juego
+                Vista -> Vista: Continúa con el siguiente turno
+        end
+end
+
+deactivate Vista
+deactivate Usuario
+
+@enduml

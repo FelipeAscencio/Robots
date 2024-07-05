@@ -1,0 +1,90 @@
+@startuml
+
+title Diagrama de Clases
+
+Juego o-- "1..*" Personaje : enemigos
+Juego *-- Tablero : tablero
+Juego *-- Jugador : jugador
+Robot1 --|> Personaje
+Robot2 --|> Personaje
+Explosion --|> Personaje
+Jugador --|> Personaje
+Tablero o-- "1..*" Explosion
+
+
+class Juego {
+    - static final int USOS_MINIMOS
+    - Jugador jugador
+    - Tablero tablero
+    - List<Enemigo> enemigos
+    - int CANTIDAD_INICIAL_ENEMIGOS
+    - int nivel
+    - int puntos
+    - int teletransportes
+    - boolean game_over
+
+    - void generarEnemigos(int cantidadEnemigos)
+    - void iniciarNivel(int cantidadEnemigos, int nivel)
+    - void agregarelementostablero()
+    - void verificarColisionEnemigos(List<Enemigo> enemigosAEliminar)
+    + void moverJugadorEnTablero(Direccion dir)
+    + void moverEnemigos()
+    + void reiniciarJuego(int nivel)
+    + void jugadorTeletransportacion(int fila, int col, boolean seguro)
+}
+
+abstract class Personaje{
+-int filaActual
+-int columnaActual
+
+-int calcularDireccion(int actual, int objetivo)
++void mover(int filaJugador, int columnaJugador)
++boolean colisionJugador(int filaJugador, int columnaJugador)
+}
+
+class Robot1{
++void mover(int filaJugador, int columnaJugador)
+}
+
+class Robot2{
++ void mover(int filaJugador, int columnaJugador)
+}
+
+class Explosion{
++void mover(int filaJugador, int columnaJugador)
+}
+
+class Jugador{
+-int filaActual
+-int columnaActual
++void mover(Direccion direccion)
++void mover(int filaJugador, int columnaJugador)
+}
+
+class Tablero{
+-int filas
+-int columnas
+-Object[][] matriz
++void vaciar()
++boolean hayExplosion(int fila, int col)
++boolean hayEnemigo(int fila, int col)
++void eliminarElemento(int fila, int columna)
++void agregarElemento(Object elemento, int filaNueva, int colNueva)
+}
+
+enum Direccion{
+ ARRIBA
+ ABAJO
+ IZQUIERDA
+ DERECHA
+ DIAGONAL_ARRIBA_IZQUIERDA
+ DIAGONAL_ARRIBA_DERECHA
+ DIAGONAL_ABAJO_IZQUIERDA
+ DIAGONAL_ABAJO_DERECHA
+ - int cambioFila;
+ - int cambioColumna;
+
+ +Direccion calcular(double diffX, double diffY)
+}
+
+@enduml

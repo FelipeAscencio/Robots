@@ -1,0 +1,53 @@
+@startuml
+
+title Diagrama de Secuencia: Inicialización del Juego y GUI
+
+participant "VistaMapa" as Vista
+participant "Juego" as Juego
+participant "Tablero" as Tablero
+participant "Jugador" as Jugador
+participant "Enemigos" as Enemigos
+participant "Sprites" as Sprites
+participant "TableroGridpane" as TableroGridpane
+
+activate Vista
+Vista -> Juego: Crear un nuevo juego
+activate Juego
+
+Juego -> Tablero: Crear tablero
+activate Tablero
+Tablero --> Juego: Tablero creado
+Juego -> Jugador: Crear jugador
+activate Jugador
+Jugador --> Juego: Jugador creado
+deactivate Jugador
+Juego -> Tablero: Añadir Jugador
+Tablero --> Juego: Jugador añadido
+
+Juego -> Enemigos: Crear enemigos
+activate Enemigos
+Enemigos --> Juego: Enemigos creados
+deactivate Enemigos
+Juego -> Tablero: Añadir Enemigos
+Tablero --> Juego: Enemigos añadidos
+deactivate Tablero
+
+Juego -> Juego: Inicializa nivel y puntos según estado actual
+Juego --> Vista: Juego creado
+deactivate Juego
+
+Vista -> Sprites: Cargar sprites
+activate Sprites
+Sprites --> Vista: Sprites cargados
+deactivate Sprites
+
+Vista -> TableroGridpane: Inicializar Gridpane
+activate TableroGridpane
+TableroGridpane --> Vista: Gridpane inicializado
+Vista -> TableroGridpane: Configurar celdas y elementos
+TableroGridpane --> Vista: Celdas y elementos configurados
+Vista -> TableroGridpane: Asignar eventos de teclado y mouse
+TableroGridpane --> Vista: Eventos asignados
+deactivate TableroGridpane
+
+@enduml
