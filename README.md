@@ -1,7 +1,5 @@
 # Robots
 
----
-
 ## Introduction
 
 The game is a reinterpretation of the classic video game "Chase".
@@ -87,27 +85,27 @@ Related files:
 
 ---
 
-## Graphical Interface (GUI)
+# Graphical Interface (GUI)
 
 The graphical interface developed is designed to be as intuitive and simple as possible, without losing that artistic touch that gives its own personality to the implementation of the game.
 
 ---
 
-## Implementation details
+# Implementation details
 
-### Polymorphism
+## Polymorphism
 
 The implementation has, as requested in the statement, the polymorphic behaviors related to robots and burning cells.
 
 The 3 classes inherit from the same superclass, use inherited methods with different results (definition of polymorphism), and also have their particular behaviors and attributes that characterize them.
 
-### Gameplay
+## Gameplay
 
 The implementation of "ROBOTS" gives the user a wide range of tools to play with.
 
 Therefore, the game can be enjoyed in its entirety with both the "mouse" and the "keyboard" (If you have questions about the commands you can always consult the "Tutorial").
 
-### Map size
+## Map size
 
 The map has an implementation that allows the user in the game to modify the number of rows and columns of their choice, between stipulated values.
 
@@ -117,19 +115,19 @@ However, the "model" of the game is not limited to specific values of "Rows" and
 
 Finally, depending on the size of the requested map and in relation to the greater number between "rows" and "columns", the size of the cells on the board varies, to obtain greater precision and clarity of animations on small maps, but also to have a Wide and clear vision on larger maps.
 
-### Scoring system
+## Scoring system
 
 The game's scoring system is simple. For each explosion the player earns "1" point and the score is cumulative between levels, that is, when advancing in level the points previously obtained continue to count. What will be the maximum you can reach?
 
-### Difficulty
+## Difficulty
 
 The game begins with "5" robots at level "1" and then, as the levels progress, they are increased by 2.
 
-### Types of robots
+## Types of robots
 
 The type of robots that are generated is completely random, which makes each new game a different challenge to test your skills.
 
-### Animations
+## Animations
 
 The chair provided a "sprite strip" with which we worked to represent the characters and "animate" them.
 
@@ -137,7 +135,7 @@ The "animation" that was implemented means that between turns, the sprites of al
 
 Finally, the player has a specific "Game Over" "sprite", with which to indicate in a more intuitive way (along with the messages provided by the "GUI") the end of the game to the user, so that he can restart it. .
 
-### End of program
+## End of program
 
 As requested by statement, the only way to end the program is by clicking the "X" in the "GUI".
 
